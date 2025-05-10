@@ -2,12 +2,9 @@
 #include<stdio.h>
 #include<string.h>
 #include"menu.h"//菜单头文件
-#include"card.h"//卡
 #define MAX 1000
 int main() {
 	int choice;
-	int number = 0;
-	Card cards[MAX];
 	while (1) {
 		showMenu();//显示菜单
 		printf("请选择您需要的服务:");
@@ -19,10 +16,10 @@ int main() {
 		char p[20];
 		switch (choice) {
 		case 1: 
-			add_card(cards, &number);
+			add();
 			break;//添加
 		case 2:
-			 check_card(cards, number, s,p);
+			query();
 			break;//查询
 		case 3:
 
@@ -36,7 +33,7 @@ int main() {
 		case 7:
 			break;
 		case 8: 
-			delete_card(cards,&number,s,p);//注销
+			
 			break;
 		case 0:printf("欢迎下次使用\n");	
 			exit(0);

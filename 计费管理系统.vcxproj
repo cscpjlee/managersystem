@@ -127,13 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="card.c" />
+    <ClCompile Include="card_service.c" />
     <ClCompile Include="menu.c" />
+    <ClCompile Include="tool.c" />
     <ClCompile Include="计费管理系统main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="card.h" />
+    <ClInclude Include="card_file.h" />
+    <ClInclude Include="card_service.h" />
+    <ClInclude Include="global.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="model.h" />
+    <ClInclude Include="tool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
