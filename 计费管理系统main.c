@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<string.h>
+//#include"model.h"
 #include"menu.h"//菜单头文件
 #define MAX 1000
 int main() {
@@ -21,12 +22,22 @@ int main() {
 		case 2:
 			query();
 			break;//查询
-		case 3:
+		case 3:updateCardInfo(CARDPATH);
 
 			break;
-		case 4:
+		case 4:loadAndDisplayCards(CARDPATH);
 			break;
-		case 5:
+		case 5: {
+			Card card;
+			printf("请输入卡号(长度为1~18)：");
+			scanf("%s", card.c_Number);
+			// 将输入的卡号保存到卡结构体中
+			if (1 == isExsit(card.c_Number, CARDPATH))
+				printf("卡信息文件%s中，有%s卡信息。\n", CARDPATH, card.c_Number);
+			else
+				printf("卡信息文件%s中，无%s卡信息。\n", CARDPATH, card.c_Number);
+
+		}
 			break;
 		case 6:
 			break;
@@ -45,4 +56,5 @@ int main() {
 		system("pause");
 		system("cls");
 	}
+	return 0;
 }

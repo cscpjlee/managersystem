@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="card_file.c" />
     <ClCompile Include="card_service.c" />
     <ClCompile Include="menu.c" />
     <ClCompile Include="tool.c" />

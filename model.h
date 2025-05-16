@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<time.h>
+#define CARDPATH   "d:\\card.txt"
 typedef struct {
 	char c_Number[20];//卡号
 	char c_Password[20];//卡密
@@ -14,3 +15,4 @@ typedef struct {
 	int count;//使用次数
 	int nDel;//删除标识
 }Card;
+

@@ -8,9 +8,9 @@ void showMenu() {
 	printf("--------菜单-------\n");
 	printf("1.添加卡\n");
 	printf("2.查询卡\n");
-	printf("3.上机\n");
-	printf("4.下机\n");
-	printf("5.充值\n");
+	printf("3.文件内更新\n");
+	printf("4.展示卡信息\n");
+	printf("5.通过卡号看是否有无该卡\n");
 	printf("6.退费\n");
 	printf("7.查询统计\n");
 	printf("8.注销卡\n");
@@ -56,6 +56,7 @@ void query() {
 	pCard = queryCard(q_Number);
 	if(pCard == NULL) {
 		printf("出错了");
+		return 0;
 	}
 	timeToString(pCard->tLast, atime);
 	printf("查询到的卡信息如下:\n");
