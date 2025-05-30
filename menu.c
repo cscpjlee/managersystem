@@ -8,12 +8,13 @@ void showMenu() {
 	printf("--------菜单-------\n");
 	printf("1.添加卡\n");
 	printf("2.查询卡\n");
-	printf("3.文件内更新\n");
-	printf("4.展示卡信息\n");
-	printf("5.通过卡号看是否有无该卡\n");
+	printf("3.上机\n");
+	printf("4.下机\n");
+	printf("5.充值\n");
 	printf("6.退费\n");
 	printf("7.查询统计\n");
 	printf("8.注销卡\n");
+	printf("9.修改卡\n");
 	printf("0.退出\n");
 
 }//菜单实现
@@ -48,18 +49,41 @@ int getSize(const char* pInfo) {
 	return nSize;
 }//获得卡号卡密长度
 void query() {
-	char q_Number[18] = {0};
+	char q_Number[18] = { 0 };
 	char atime[20] = { 0 };
 	printf("请输入要查询的卡号\n");
 	scanf("%s", q_Number);
 	Card* pCard = NULL;
 	pCard = queryCard(q_Number);
-	if(pCard == NULL) {
+	if (pCard == NULL) {
 		printf("出错了");
-		return 0;
+		return;
 	}
 	timeToString(pCard->tLast, atime);
-	printf("查询到的卡信息如下:\n");
-	printf("卡号\t状态\t余额\t累计使用\t使用次数\t上次使用时间\n");
-	printf("%s\t%d\t%.1f\t%.1f\t%d\t%s\n", pCard->c_Number, pCard->c_Status, pCard->c_Money,pCard->s_Money, pCard->count,atime);
-}//查询卡
+	/*for (int i = 0; i < nIndex; i++) {
+		printf("查询到的卡信息如下:\n");
+		printf("卡号\t状态\t余额\t累计使用\t使用次数\t上次使用时间\n");
+		printf("%s\t%d\t%.1f\t%.1f\t\t%d\t\t%s\n", (pCard + i)->c_Number, (pCard + i)->c_Status, (pCard + i)->c_Money, (pCard + i)->s_Money, (pCard + i)->count, atime);
+	}*/
+		printf("查询到的卡信息如下:\n");
+		printf("卡号\t状态\t余额\t累计使用\t使用次数\t上次使用时间\n");
+		printf("%s\t%d\t%.1f\t%.1f\t\t%d\t\t%s\n", pCard->c_Number, pCard->c_Status, pCard->c_Money,pCard->s_Money, pCard->count,atime);
+	}//查询卡
+
+	void exitApp() {
+		releaseCardList();
+		printf("欢迎下次使用!\n");
+		exit(0);
+	}
+	void delete() {
+		char number[19];
+		printf("请输入要删除的卡号：");
+		scanf("%s", number);
+		deleteCard(number);
+	}
+	void modify() {
+		char number[19];
+		printf("请输入要修改的卡号：");
+		scanf("%s", number);
+		modifyCard(number);
+	}

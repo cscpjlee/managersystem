@@ -15,4 +15,8 @@ typedef struct {
 	int count;//使用次数
 	int nDel;//删除标识
 }Card;
+typedef struct CardNode {
+	Card data;
+	struct CardNode* next;
+}CardNode,*lpCardNode;
 

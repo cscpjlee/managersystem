@@ -22,32 +22,24 @@ int main() {
 		case 2:
 			query();
 			break;//查询
-		case 3:updateCardInfo(CARDPATH);
-
+		case 3:
 			break;
-		case 4:loadAndDisplayCards(CARDPATH);
+		case 4:
 			break;
-		case 5: {
-			Card card;
-			printf("请输入卡号(长度为1~18)：");
-			scanf("%s", card.c_Number);
-			// 将输入的卡号保存到卡结构体中
-			if (1 == isExsit(card.c_Number, CARDPATH))
-				printf("卡信息文件%s中，有%s卡信息。\n", CARDPATH, card.c_Number);
-			else
-				printf("卡信息文件%s中，无%s卡信息。\n", CARDPATH, card.c_Number);
-
-		}
+		case 5:
 			break;
 		case 6:
 			break;
 		case 7:
 			break;
 		case 8: 
-			
+		    delete();
 			break;
-		case 0:printf("欢迎下次使用\n");	
-			exit(0);
+		case 9:
+			modify();
+			break;
+		case 0:
+			exitApp();
 			break;
 		default:
 			printf("请重新输入\n");
