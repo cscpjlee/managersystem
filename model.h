@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<time.h>
-#define CARDPATH   "d:\\card.txt"
+#define CARDPATH   "d:\\card.dat"
 typedef struct {
 	char c_Number[20];//ø®∫≈
 	char c_Password[20];//ø®√‹
@@ -19,4 +19,5 @@ typedef struct CardNode {
 	Card data;
 	struct CardNode* next;
 }CardNode,*lpCardNode;
+
 

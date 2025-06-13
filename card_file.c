@@ -1,154 +1,73 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include"card_file.h"
 #include"tool.h"
-//int saveCard(const Card* pCard, const char* pPath)
-//{
-//    FILE* fp = NULL;   // 文件结构体指针
-//
-//    // 以追加的模式打开文件，如果打开失败，则以只写的模式打开文件
-//    if ((fp = fopen(pPath, "ab")) == NULL)
-//    {
-//        if ((fp = fopen(pPath, "wb")) == NULL)
-//        {
-//            return 0;
-//        }
-//    }
-//
-//    fwrite(pCard, sizeof(Card), 1, fp);
-//
-//    // 关闭文件
-//    fclose(fp);
-//    return 1;
-//}
-//void loadAndDisplayCards(const char* pPath)
-//{
-//    FILE* fp = fopen(pPath, "rb"); // 以二进制读取模式打开文件
-//    if (fp == NULL)
-//    {
-//        printf("无法打开文件 %s\n", pPath);
-//        return;
-//    }
-//
-//    Card card;
-//    int count = 0;
-//
-//    // 循环读取文件中的卡信息
-//    while (fread(&card, sizeof(Card), 1, fp) == 1)
-//    {
-//        // 显示卡信息
-//        char aLastTime[50];
-//        timeToString(card.tLast, aLastTime);
-//        printf("查询到的卡信息如下:\n");
-//        printf("卡号\t状态\t余额\t累计使用\t使用次数\t上次使用时间\n");
-//        printf("%s\t%d\t%.1f\t%.1f\t%d\t%s\n", card.c_Number, card.c_Status, card.c_Money, card.s_Money, card.count, aLastTime);
-//        count++;
-//    }
-//
-//    fclose(fp); // 关闭文件
-//    printf("共读取了 %d 张卡的信息。\n", count);
-//}
-//int updateCard(const Card* pCard, const char* pPath, int nIndex) {
-//    FILE* fp = NULL;    // 文件指针  
-//    int nLine = 0;      // 文件卡信息数  
-//    long lPosition = 0; // 文件位置标记  
-//    Card bBuf;
-//    if((fp = fopen(pPath, "rb+")) == NULL)  {    
-//        return 0;  
-//    }  
-//    while((!feof(fp)) && (nLine < nIndex-1))  
-//    {    
-//        if(fread(&bBuf, sizeof(Card), 1, fp) != 0)    {      // 获取文件标识位置      
-//            lPosition = ftell(fp);      
-//            nLine++;    
-//        }  
-//    }
-//    fseek(fp, lPosition, 0);  
-//    fwrite(pCard, sizeof(Card), 1, fp);    
-//    fclose(fp);  
-//    return 1;
-//}
-//int updateCardInFile(const Card* pCard, const char* pPath, int nIndex)
-//{
-//    FILE* fp = NULL;    // 文件指针
-//    int nLine = 0;      // 文件卡信息数
-//    long lPosition = 0; // 文件位置标记
-//    Card bBuf;
-//
-//    if ((fp = fopen(pPath, "rb+")) == NULL)
-//    {
-//        printf("无法打开文件 %s\n", pPath);
-//        return 0;
-//    }
-//
-//    while ((!feof(fp)) && (nLine < nIndex - 1))
-//    {
-//        if (fread(&bBuf, sizeof(Card), 1, fp) != 0)
-//        {
-//            lPosition = ftell(fp);
-//            nLine++;
-//        }
-//    }
-//
-//    fseek(fp, lPosition, 0);
-//    fwrite(pCard, sizeof(Card), 1, fp);
-//    fclose(fp);
-//    return 1;
-//}
-//
-//// 更新卡信息的主函数
-//int updateCardInfo(const char* filePath)
-//{
-//    struct tm* endTime;     // 截止时间
-//    struct tm* startTime;   // 开卡时间
-//    int nIndex;             // 要更新的记录索引
-//    Card card;
-//
-//    printf("更新文件 %s 中第几条记录：", CARDPATH);
-//    scanf("%d", &nIndex);
-//
-//    printf("请输入更新内容：\n");
-//    printf("请输入卡号：");
-//    scanf("%s", card.c_Number);
-//    printf("请输入密码：");
-//    scanf("%s", card.c_Password);
-//    printf("请输入开卡金额：");
-//    scanf("%f", &card.c_Money);
-//
-//    card.s_Money = card.c_Money;    // 添加卡时，累计金额等于开卡金额
-//    card.nDel = 0;                     // 删除标识
-//    card.c_Status = 0;                  // 卡状态
-//    card.count = 0;                // 使用次数
-//    card.tStart = card.tEnd = card.tLast = time(NULL);  // 根据开卡时间，计算截止时间，每张卡的有效期为一年
-//
-//    startTime = localtime(&card.tStart);
-//    endTime = localtime(&card.tEnd);
-//    endTime->tm_year = startTime->tm_year + 1;
-//    card.tEnd = mktime(endTime);
-//
-//    if (updateCardInFile(&card, filePath, nIndex))
-//    {
-//        printf("卡信息更新成功！\n");
-//        return 1;
-//    }
-//    else
-//    {
-//        printf("卡信息更新失败！\n");
-//        return 0;
-//    }
-//}
-//int isExsit(const char* pNum, const char* pPath) {
-//    FILE* fp = NULL;  // 文件结构体指针  
-//    char aName[18]={0};   // 存放读取出的卡号
-//    if((fp = fopen(pPath, "rb")) == NULL)  {    
-//        return 0; 
-//    }
-//    while(!feof(fp))  {    // 读取卡号，并比较卡号是否为当前查找的卡号    
-//        if(fread(aName, sizeof(aName), 1, fp) != 0)    {      
-//            if(strcmp(aName, pNum) == 0)      {        
-//                fclose(fp);        
-//                return 1;      
-//            }      else         
-//                fseek(fp, sizeof(Card) - sizeof(aName), SEEK_CUR);    }  }  
-//    fclose(fp);  
-//    return 0;
-//}
+lpCardNode cardList = NULL;
+void saveCardListToFile() {
+    // 如果链表为空或者只有一个头节点，则无需保存
+    if (cardList == NULL || cardList->next == NULL) {
+        // 可选：如果文件已存在但链表为空，可以删除文件或清空文件
+        // 这里我们简单地返回，不清空文件，以防意外删除数据
+        return;
+    }
+
+    FILE* fp = fopen(CARDPATH, "wb"); // "wb" -> write binary, 以二进制写入模式打开文件
+    if (fp == NULL) {
+        printf("错误：无法打开文件 %s 进行写入！\n", CARDPATH);
+        return;
+    }
+
+    lpCardNode current = cardList->next; // 从第一个有效节点开始
+    while (current != NULL) {
+        // 将当前节点的 data (即 Card 结构体) 写入文件
+        fwrite(&(current->data), sizeof(Card), 1, fp);
+        current = current->next;
+    }
+
+    fclose(fp); // 关闭文件
+    printf("所有卡片信息已成功保存到 %s\n", CARDPATH);
+}
+// 在 card_file.c 文件末尾添加
+
+// 从文件加载卡片信息到链表
+void loadCardListFromFile() {
+    // 首先确保链表已初始化（有一个头节点）
+    if (cardList == NULL) {
+        initNodeList();
+    }
+
+    FILE* fp = fopen(CARDPATH, "rb"); // "rb" -> read binary, 以二进制读取模式打开文件
+    if (fp == NULL) {
+        // 文件不存在是正常情况（首次运行），无需报错
+        printf("未找到数据文件 %s，将创建一个新的空列表。\n", CARDPATH);
+        return;
+    }
+
+    Card tempCard;
+    // 循环读取文件，直到文件末尾
+    // fread 返回成功读取的项数，当读到文件尾时，它会返回 0
+    while (fread(&tempCard, sizeof(Card), 1, fp) == 1) {
+        // 每读取一张卡的信息，就调用 addCard 将它加入链表
+        addCard(tempCard);
+    }
+
+    fclose(fp); // 关闭文件
+    printf("已成功从 %s 加载卡片信息。\n", CARDPATH);
+}
+// 重置系统数据：清空链表和文件
+void resetSystemData() {
+    // 1. 清空内存中的链表
+    releaseCardList(); // 释放所有旧节点
+    initNodeList();    // 创建一个新的空链表头
+
+    // 2. 清空数据文件
+    FILE* fp = fopen(CARDPATH, "wb"); // "wb" 模式会覆盖或创建新文件
+    if (fp != NULL) {
+        fclose(fp); // 打开后立即关闭，文件内容就被清空了
+        printf("数据文件 %s 已被清空。\n", CARDPATH);
+    }
+    else {
+        printf("警告：无法操作数据文件 %s。\n", CARDPATH);
+    }
+
+    printf("系统数据已重置！内存和文件均已清空。\n");
+}

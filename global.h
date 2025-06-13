@@ -1,3 +1,3 @@
 #pragma once
-#define FLASE 0
-#define TURE 1
+#define FALSE 0
+#define TRUE 1

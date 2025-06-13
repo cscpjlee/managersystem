@@ -5,6 +5,7 @@
 #include"menu.h"//菜单头文件
 #define MAX 1000
 int main() {
+	loadCardListFromFile();
 	int choice;
 	while (1) {
 		showMenu();//显示菜单
@@ -23,20 +24,28 @@ int main() {
 			query();
 			break;//查询
 		case 3:
+			startUsing();
 			break;
 		case 4:
+			endUsing();
 			break;
 		case 5:
+			recharge();
 			break;
 		case 6:
+			refund();
 			break;
 		case 7:
+			statistics();
 			break;
 		case 8: 
 		    delete();
 			break;
 		case 9:
 			modify();
+			break;
+		case 10:
+			resetData();
 			break;
 		case 0:
 			exitApp();
