@@ -11,3 +11,6 @@ int endUsingCard(const char* pNumber, const char* pwd);
 int rechargeCard(const char* pNumber, float amount);
 int refundCard(const char* pNumber, float amount);
 void queryStatistics();
+Card* queryCards(char* pName, int* pCount);
+int adminLogin();
+int userLogin();

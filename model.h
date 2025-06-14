@@ -19,5 +19,13 @@ typedef struct CardNode {
 	Card data;
 	struct CardNode* next;
 }CardNode,*lpCardNode;
-
-
+typedef enum {
+	ROLE_NONE,
+	ROLE_ADMIN,
+	ROLE_USER
+}UserRole;
+extern UserRole g_currentUserRole;
+// 用一个指针来记录当前登录的是哪个用户卡节点
+extern lpCardNode g_currentUserNode;
+#define ADMIN_USERNAME "admin"
+#define ADMIN_PASSWORD "admin123"

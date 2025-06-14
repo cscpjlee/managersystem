@@ -15,3 +15,27 @@ void timeToString(time_t t, char* pBuf) {
         strcpy(pBuf, "Invalid Time");
     }
 }
+//√‹¬Îº”√‹
+void getPassword(char* password, int maxLength) {
+	char ch;
+	int i = 0;
+	while (i < maxLength) {
+		ch = _getch();
+		if (ch == '\r' || ch == '\n') {
+			break;
+		}
+		if (ch == '\b') {
+			if (i > 0) {
+				i--;
+				printf("\b \b");
+			}
+		}
+		else {
+			password[i] = ch;
+			printf("*");
+			i++;
+		}
+	}
+	password[i] = '\0';
+	printf("\n");
+}

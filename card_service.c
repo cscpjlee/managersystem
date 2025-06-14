@@ -51,7 +51,7 @@ int addCard(Card card) {
 			cur = NULL;
 		}
 	}
-
+	//查询卡
 	Card* queryCard(const char* pName) {
 		// 先在内存链表中查询
 		if (cardList == NULL) {
@@ -128,25 +128,41 @@ int modifyCard(const char* pNumber) {
 	printf("未找到卡号 %s\n", pNumber);
 	return 0;
 }
-//Card* queryCards(const char* pName,  int* pIndex) {
-//	lpCardNode cur = NULL;
-//	Card* pCard = (Card*)malloc(sizeof(Card));
-//	if (pCard == NULL) {
-//		return NULL;
-//	}
-//	if (cardList != NULL) {
-//		cur = cardList->next;
-//		while (cur != NULL) {
-//			if (strstr(cur->data.c_Number, pName) != NULL) {
-//				pCard[*pIndex] = cur->data;
-//				(*pIndex)++;
-//				pCard = (Card*)realloc(pCard, (*pIndex) * sizeof(Card));
-//			}
-//			cur = cur->next;
-//		}
-//	}
-//	return NULL;
-//}//模糊查询
+//模糊查询
+Card* queryCards(char* pName, int* pCount) {
+	*pCount = 0;
+	if (cardList == NULL || cardList->next == NULL || pName == NULL) {
+		return NULL;
+	}
+	lpCardNode cur = cardList->next;
+	while (cur != NULL) {
+		if (strstr(cur->data.c_Number, pName) != NULL) {
+			(*pCount)++;
+		}
+		cur = cur->next;
+	}
+	if (*pCount == 0) {
+		return NULL;
+	}
+	Card* resultArray = (Card*)malloc((*pCount) * sizeof(Card));
+	if (resultArray == NULL) {
+		printf("分配内存失败!\n");
+		return NULL;
+	}
+	int index = 0;
+	cur = cardList->next;
+	while (cur != NULL) {
+		if (strstr(cur->data.c_Number, pName) != NULL) {
+			resultArray[index] = cur->data;
+			index++;
+			if (index == *pCount) {
+				break;
+			}
+		}
+		cur = cur->next;
+	}
+	return resultArray;
+}
 //上机函数
 int startUsingCard(const char* pNumber, const char* pwd) {
 
@@ -301,4 +317,47 @@ void queryStatistics() {
 	printf("当前上机数量: %d 张\n", onlineCards);
 	printf("所有卡总余额: %.2f 元\n", totalMoney);
 	printf("---------------------------\n");
+}
+//管理员登录
+int adminLogin() {
+	char username[20];
+	char password[20];
+	printf("请输入管理员账户: ");
+	scanf("%s", username);
+	printf("请输入管理员密码: ");
+	getPassword(password, 8);
+
+	if (strcmp(username, ADMIN_USERNAME) == 0 && strcmp(password, ADMIN_PASSWORD) == 0) {
+		g_currentUserRole = ROLE_ADMIN;
+		g_currentUserNode = NULL; // 管理员没有对应的卡节点
+		printf("管理员登录成功！\n");
+		return 1;
+	}
+	else {
+		printf("账户或密码错误！\n");
+		return 0;
+	}
+}
+//用户登录
+int userLogin() {
+	char username[20];
+	char password[20];
+	printf("请输入您的卡号: ");
+	scanf("%s", username); // 复用 username 变量存卡号
+	printf("请输入您的密码: ");
+	getPassword(password, 8);
+
+	// 遍历链表查找用户
+	lpCardNode userNode = cardList->next;
+	while (userNode != NULL) {
+		if (strcmp(userNode->data.c_Number, username) == 0 && strcmp(userNode->data.c_Password, password) == 0) {
+			g_currentUserRole = ROLE_USER;
+			g_currentUserNode = userNode; // 记录下当前登录的用户节点
+			printf("用户 %s 登录成功！\n", username);
+			return 1;
+		}
+		userNode = userNode->next;
+	}
+	printf("卡号或密码错误！\n");
+	return 0;
 }
