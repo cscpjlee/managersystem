@@ -19,7 +19,7 @@ int main() {
         }
         int choice = -1;
         while (g_currentUserRole != ROLE_NONE) {
-            system("cls"); // 清屏
+            system("cls"); 
             if (g_currentUserRole == ROLE_ADMIN) {
                 showAdminMenu();
                 printf("管理员，请输入您的选择: ");

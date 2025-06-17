@@ -315,27 +315,20 @@ void queryStatistics() {
 	printf("所有卡总余额: %.2f 元\n", totalMoney);
 	printf("---------------------------\n");
 	printf("------ 所有卡片详细信息列表 ------\n");
-	printf("--------------------------------------------------------------------------------------------------\n");
-	// 调整表头以包含所有需要的信息
 	printf("%-18s\t%-8s\t%-6s\t余额\t\t上机时间\n", "卡号", "密码", "状态");
 
-	current = cardList->next; // 重置指针，再次从头遍历
-	char timeStr[20];         // 用于存放转换后的时间字符串
+	current = cardList->next; 
+	char timeStr[20];       
 
 	while (current != NULL) {
-		// 为了更好的可读性，将 0/1 状态转换为文字
 		const char* statusText = (current->data.c_Status == 1) ? "上机中" : "空闲";
-
-		// 只有当卡处于“上机中”状态时，其 tStart (上机时间) 才有实时意义
 		if (current->data.c_Status == 1) {
 			timeToString(current->data.tStart, timeStr);
 		}
 		else {
-			// 如果卡未上机，则上机时间无意义，显示 N/A
 			strcpy(timeStr, "N/A");
 		}
 
-		// 打印每一行的详细信息
 		printf("%-18s\t%-8s\t%-6s\t%-8.2f\t\t%s\n",
 			current->data.c_Number,
 			current->data.c_Password,

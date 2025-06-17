@@ -51,7 +51,7 @@ int login() {
 		exitApp();
 		break;
 	default:
-		printf("无效数字,重新输入!");
+		return 1;
 	}
 }
 //退出登录

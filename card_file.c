@@ -5,8 +5,6 @@ lpCardNode cardList = NULL;
 void saveCardListToFile() {
     // 如果链表为空或者只有一个头节点，则无需保存
     if (cardList == NULL || cardList->next == NULL) {
-        // 可选：如果文件已存在但链表为空，可以删除文件或清空文件
-        // 这里我们简单地返回，不清空文件，以防意外删除数据
         return;
     }
 
@@ -53,13 +51,9 @@ void loadCardListFromFile() {
     fclose(fp); // 关闭文件
     printf("已成功从 %s 加载卡片信息。\n", CARDPATH);
 }
-// 重置系统数据：清空链表和文件
 void resetSystemData() {
-    // 1. 清空内存中的链表
     releaseCardList(); // 释放所有旧节点
     initNodeList();    // 创建一个新的空链表头
-
-    // 2. 清空数据文件
     FILE* fp = fopen(CARDPATH, "wb"); // "wb" 模式会覆盖或创建新文件
     if (fp != NULL) {
         fclose(fp); // 打开后立即关闭，文件内容就被清空了
