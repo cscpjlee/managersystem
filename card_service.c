@@ -33,10 +33,10 @@ int addCard(Card card) {
 	cur->next = NULL;
 
 	lpCardNode temp = cardList; // 使用临时指针遍历链表，避免修改头指针
-	while (temp->next != NULL) { // 找到链表的最后一个节点
+	while (temp->next != NULL) {
 		temp = temp->next;
 	}
-	temp->next = cur; // 将新节点添加到链表末尾
+	temp->next = cur; 
 	return 1;
 }
 
@@ -209,12 +209,12 @@ int endUsingCard(const char* pNumber, const char* pwd) {
 			float fee = usedTime/60;
 			if (cardNode->data.c_Money < fee) {
 				printf("余额不足，无法下机，请先充值\n");
-				cardNode->data.c_Status = 1; // 恢复上机状态
+				cardNode->data.c_Status = 1; 
 				return 0;
 			}
-			cardNode->data.c_Money -= fee; // 扣除费用
-			cardNode->data.s_Money += fee; // 累计使用金额
-			cardNode->data.tLast = endTime; // 更新最后使用时间
+			cardNode->data.c_Money -= fee; 
+			cardNode->data.s_Money += fee; 
+			cardNode->data.tLast = endTime; 
 			printf("卡号 %s 下机成功，使用时长: %.2f 小时，扣除费用: %.2f 元，剩余余额: %.2f 元\n",
 				pNumber, usedTime / 3600.0, fee, cardNode->data.c_Money);
 			// 更新文件中的卡片信息
@@ -238,8 +238,6 @@ int rechargeCard(const char* pNumber, float amount) {
 		printf("充值金额必须为正数。\n");
 		return 0;
 	}
-
-	// 调用现有的 queryCard 函数查找卡片
 	Card* pCard = queryCard(pNumber);
 
 	if (pCard == NULL) {
@@ -247,17 +245,13 @@ int rechargeCard(const char* pNumber, float amount) {
 		return 0;
 	}
 
-	// 执行充值
 	pCard->c_Money += amount;
-	// 累计开卡/充值总额也应该增加
 	pCard->s_Money += amount;
-
 	printf("充值成功！\n");
 	printf("卡号: %s\n", pCard->c_Number);
 	printf("当前余额: %.2f 元\n", pCard->c_Money);
 	return 1;
 }
-// 在 card_file.c 中添加
 
 // 退费函数
 int refundCard(const char* pNumber, float amount) {
@@ -295,16 +289,13 @@ void queryStatistics() {
 	}
 	int totalCards = 0;
 	int onlineCards = 0;
-	float totalMoney = 0.0f;
-	lpCardNode current = cardList->next; // 从第一个有效节点开始遍历
+	lpCardNode current = cardList->next; // 开始遍历
 	while (current != NULL) {
-		totalCards++; // 每遍历一个节点，总卡数+1
+		totalCards++;
 
 		if (current->data.c_Status == 1) {
-			onlineCards++; // 如果卡片状态为上机，在线数+1
+			onlineCards++; 
 		}
-
-		totalMoney += current->data.c_Money; // 累加所有卡的余额
 
 		current = current->next;
 	}
@@ -312,23 +303,16 @@ void queryStatistics() {
 	printf("------ 系统数据统计 ------\n");
 	printf("总发卡数量: %d 张\n", totalCards);
 	printf("当前上机数量: %d 张\n", onlineCards);
-	printf("所有卡总余额: %.2f 元\n", totalMoney);
 	printf("---------------------------\n");
 	printf("------ 所有卡片详细信息列表 ------\n");
-	printf("%-18s\t%-8s\t%-6s\t余额\t\t上机时间\n", "卡号", "密码", "状态");
+	printf("%-18s\t%-8s\t%-6s\t余额\t\t上次使用时间\n", "卡号", "密码", "状态");
 
 	current = cardList->next; 
 	char timeStr[20];       
 
 	while (current != NULL) {
 		const char* statusText = (current->data.c_Status == 1) ? "上机中" : "空闲";
-		if (current->data.c_Status == 1) {
-			timeToString(current->data.tStart, timeStr);
-		}
-		else {
-			strcpy(timeStr, "N/A");
-		}
-
+		timeToString(current->data.tLast, timeStr);
 		printf("%-18s\t%-8s\t%-6s\t%-8.2f\t\t%s\n",
 			current->data.c_Number,
 			current->data.c_Password,

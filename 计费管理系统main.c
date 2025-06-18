@@ -14,7 +14,7 @@ int main() {
                 system("cls"); // 清屏
             }
             else {
-                break; // 登录成功，跳出登录循环
+                break;
             }
         }
         int choice = -1;

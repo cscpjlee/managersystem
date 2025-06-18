@@ -205,7 +205,7 @@ void query() {
 		scanf("%s", confirm);
 
 		if (strcmp(confirm, "YES") == 0) {
-			resetSystemData(); // 调用核心重置函数
+			resetSystemData(); 
 		}
 		else {
 			printf("操作已取消。\n");
